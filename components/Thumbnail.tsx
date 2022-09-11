@@ -3,8 +3,9 @@ import React from 'react'
 import { modalState, movieState } from '../atoms/modalAtom'
 import { Movie } from '../typings'
 import { useRecoilState } from 'recoil'
+import { DocumentData } from 'firebase/firestore'
 interface Props {
-  movie: Movie
+  movie: Movie | DocumentData
 }
 function Thumbnail({ movie }: Props) {
 
