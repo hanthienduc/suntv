@@ -38,7 +38,7 @@ const Home = ({
   documentaries,
   products
 }: Props) => {
- 
+
   const { user, loading } = useAuth()
   const showModal = useRecoilValue(modalState)
   const movie = useRecoilValue(movieState)
@@ -53,7 +53,9 @@ const Home = ({
     <div className="relative h-screen bg-gradient-to-b from-gray-900/10 
     to-[#010511] lg:h-[140vh]">
       <Head>
-        <title>Home - SunTV</title>
+        <title>
+          {movie?.title || movie?.original_name || 'Home'} - Netflix
+        </title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
