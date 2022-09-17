@@ -6,6 +6,7 @@ import { SyntheticEvent, useEffect, useState } from "react"
 import { useRecoilState, useRecoilValue } from "recoil"
 import { modalState, movieState } from "../atoms/modalAtom"
 import Header from "../components/Header"
+import Loader from "../components/Loader"
 import Modal from "../components/Modal"
 import { Movie } from "../typings"
 
@@ -17,6 +18,7 @@ function Search() {
   const showModal = useRecoilValue(modalState)
   const [, setShowModal] = useRecoilState(modalState)
   const [, setCurrentMovie] = useRecoilState(movieState)
+  const [loading, setLoading] = useState(false)
 
 
 
@@ -27,8 +29,9 @@ function Search() {
 
   const handleSearch = async (e: SyntheticEvent) => {
     e.preventDefault()
+    setLoading(true)
     const results = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${process.env.NEXT_PUBLIC_API_KEY}&language=en-US&page=1&query=${searchInput}&include_adult=false`)
-      .then((res) => res.json()).then((resJson) => resJson.results)
+      .then((res) => res.json()).then((resJson) => resJson.results).finally(() => setLoading(false))
     setMovies(results)
   }
 
@@ -87,6 +90,9 @@ function Search() {
 
           <div className="mt-8 w-full">
             <h1 className="text-lg mb-3 pl-5">Search result</h1>
+            <div className="flex justify-center">
+              {loading && <Loader color="dark:fill-blue" />}
+            </div>
             {movies && <div className="flex flex-col gap-3">
               {movies.map(movie => {
                 return <div className="cursor-pointer flex gap-2 hover:brightness-75 transition duration-300"
