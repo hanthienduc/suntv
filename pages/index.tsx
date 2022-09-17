@@ -13,7 +13,7 @@ import { useList } from '../hooks/useList'
 import useSubscription from '../hooks/useSubscription'
 import payments from '../lib/stripe'
 import { Movie } from '../typings'
-import requests from '../utils/request'
+import { requests } from '../utils/request'
 
 interface Props {
   netflixOriginals: Movie[],

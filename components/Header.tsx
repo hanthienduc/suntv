@@ -26,24 +26,30 @@ function Header() {
   return (
     <header className={`${isScrolled ? 'bg-[#141414]' : ''}`}>
       <div className="flex items-center space-x-2 md:space-x-10">
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg"
-          width={100}
-          height={100}
-          className="cursor-pointer object-contain"
-        />
+        <Link href={'/'}>
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg"
+            width={100}
+            height={100}
+            className="cursor-pointer object-contain"
+          />
+        </Link>
 
         <BasicMenu />
 
-
         <ul className="hidden space-x-4 md:flex">
-          <li className="headerLink 
-          cursor-default font-semibold text-white hover:text-white
-          ">Home</li >
-          <li className="headerLink">TV Shows</li >
-          <li className="headerLink">Movies</li >
-          <li className="headerLink">New & Popular</li >
-          <li className="headerLink">My List</li >
+          <li className="headerLink cursor-default font-semibold text-white hover:text-white">
+            <Link href='/'>Home</Link>
+          </li >
+          <li className="headerLink">
+            <Link href={`/category/tv-show`}>TV Shows</Link>
+          </li>
+          <li className="headerLink">
+            <Link href={`/category/movies`}>Movies</Link>
+          </li>
+          <li className="headerLink">
+            <Link href={`/category/my-list`}>My List</Link>
+          </li>
         </ul>
       </div>
       <div className='flex items-center space-x-4 text-sm font-light'>
