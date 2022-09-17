@@ -1,16 +1,15 @@
 import { getProducts, Product } from '@stripe/firestore-stripe-payments'
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { useRecoilValue } from 'recoil'
-import { modalState, movieState } from '../atoms/modalAtom'
+import { useEffect } from 'react'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { modalState, movieState, productsState } from '../atoms/modalAtom'
 import Banner from '../components/Banner'
 import Header from '../components/Header'
 import Modal from '../components/Modal'
-import Plans from '../components/Plans'
 import Row from '../components/Row'
 import useAuth from '../hooks/useAuth'
 import { useList } from '../hooks/useList'
-import useSubscription from '../hooks/useSubscription'
 import payments from '../lib/stripe'
 import { Movie } from '../typings'
 import { requests } from '../utils/request'
@@ -43,11 +42,14 @@ const Home = ({
   const showModal = useRecoilValue(modalState)
   const movie = useRecoilValue(movieState)
   const list = useList(user?.uid)
-  const subscription = useSubscription(user)
 
-  if (loading || subscription === null) return null
+  const [, setProductsState] = useRecoilState(productsState)
 
-  if (!subscription) return (<Plans products={products} />)
+  useEffect(() => {
+    setProductsState(products)
+  }, [])
+
+  if (loading) return null
 
   return (
     <div className="relative h-screen bg-gradient-to-b from-gray-900/10 

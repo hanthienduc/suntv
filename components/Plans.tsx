@@ -8,13 +8,13 @@ import { useState } from 'react'
 import { loadCheckout } from "../lib/stripe"
 import Loader from "./Loader"
 interface Props {
-  products: Product[]
+  products: Product[] | null
 }
 
 function Plans({ products }: Props) {
 
   const { logout, user } = useAuth()
-  const [selectedPlan, setSelectedPlan] = useState<Product>(products[2])
+  const [selectedPlan, setSelectedPlan] = useState<Product>(products![2])
   const [isBillingLoading, setBillingLoading] = useState(false)
 
   const subscribeToPlan = () => {
@@ -63,14 +63,14 @@ function Plans({ products }: Props) {
 
         <div className="mt-4 flex flex-col space-y-4">
           <div className="flex w-full items-center justify-end self-end md:w-3/5">
-            {products.map((product) => (
+            {products?.map((product) => (
               <div key={product.id} className={`planBox ${selectedPlan?.id === product.id ? 'opacity-100' : 'opacity-60'}`}
                 onClick={() => setSelectedPlan(product)}>
                 {product.name}
               </div>
             ))}
           </div>
-          <Table products={products} selectedPlan={selectedPlan} />
+          <Table products={products!} selectedPlan={selectedPlan} />
 
           <button
             disabled={!selectedPlan || isBillingLoading}

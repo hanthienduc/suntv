@@ -1,7 +1,7 @@
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import MuiModal from '@mui/material/Modal'
-import { useRecoilState } from 'recoil'
-import { modalState, movieState } from '../atoms/modalAtom'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { modalState, movieState, productsState } from '../atoms/modalAtom'
 import ReactPlayer from 'react-player'
 import { useEffect, useState } from 'react'
 import { Element, Genre, Movie } from '../typings'
@@ -11,6 +11,8 @@ import toast, { Toaster } from 'react-hot-toast'
 import { db } from '../firebase'
 import { FaPlay, FaVolumeOff, FaVolumeUp } from 'react-icons/fa'
 import { CheckIcon, HandThumbUpIcon, PlusIcon } from '@heroicons/react/20/solid'
+import useSubscription from '../hooks/useSubscription'
+import Plans from './Plans'
 
 function Modal() {
   const [movie, setMovie] = useRecoilState(movieState)
@@ -19,8 +21,11 @@ function Modal() {
   const [muted, setMuted] = useState(true)
   const [genres, setGenres] = useState<Genre[]>([])
   const [addedToList, setAddedToList] = useState(false)
-  const { user } = useAuth()
   const [movies, setMovies] = useState<DocumentData[] | Movie[]>([])
+  const { user, loading } = useAuth()
+  const subscription = useSubscription(user)
+  const products = useRecoilValue(productsState)
+
 
   const toastStyle = {
     background: 'white',
@@ -108,6 +113,8 @@ function Modal() {
       )
     }
   }
+
+  if (!subscription) return (<Plans products={products} />)
 
   return (
     <MuiModal

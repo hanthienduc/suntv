@@ -1,3 +1,4 @@
+import { Product } from '@stripe/firestore-stripe-payments'
 import { DocumentData } from 'firebase/firestore'
 import { atom } from 'recoil'
 import { Movie } from '../typings'
@@ -9,5 +10,10 @@ export const modalState = atom({
 
 export const movieState = atom<Movie | DocumentData | null>({
   key: 'movieState',
+  default: null,
+})
+
+export const productsState = atom<Product[] | null>({
+  key: 'productsState',
   default: null,
 })
