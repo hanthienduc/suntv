@@ -53,9 +53,11 @@ function Header() {
         </ul>
       </div>
       <div className='flex items-center space-x-4 text-sm font-light'>
-        <MagnifyingGlassIcon className='hidden w-6 h-6 sm:inline' />
-        <p className='hidden lg:inline'>Kids</p>
-        <BellIcon className='h-6 w-6' />
+        <Link href={'/search'}>
+          <MagnifyingGlassIcon className='cursor-pointer hidden w-6 h-6 sm:inline' />
+        </Link>
+        <p className='cursor-pointer hidden lg:inline'>Kids</p>
+        <BellIcon className='cursor-pointer h-6 w-6' />
         <Link href='/account'>
           <img
             src="https://occ-0-1190-2774.1.nflxso.net/dnm/api/v6/K6hjPJd6cR6FpVELC5Pd6ovHRSk/AAAABbme8JMz4rEKFJhtzpOKWFJ_6qX-0y5wwWyYvBhWS0VKFLa289dZ5zvRBggmFVWVPL2AAYE8xevD4jjLZjWumNo.png?r=a41"

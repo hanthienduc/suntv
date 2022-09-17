@@ -54,7 +54,7 @@ const Home = ({
     to-[#010511] lg:h-[140vh]">
       <Head>
         <title>
-          {movie?.title || movie?.original_name || 'Home'} - Netflix
+          {movie?.title || movie?.original_name || 'Home'} - SunTV
         </title>
         <link rel="icon" href="/favicon.ico" />
       </Head>

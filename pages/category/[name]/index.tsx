@@ -1,7 +1,9 @@
 import { getProducts, Product } from '@stripe/firestore-stripe-payments'
+import { DocumentData } from 'firebase/firestore'
+import Head from 'next/head'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { modalState, movieState } from '../../../atoms/modalAtom'
 import Header from '../../../components/Header'
@@ -46,14 +48,13 @@ function CategoryPage({
 
   const { user, loading } = useAuth()
   const showModal = useRecoilValue(modalState)
-  const movie = useRecoilValue(movieState)
   const list = useList(user?.uid)
   const subscription = useSubscription(user)
 
   const [, setShowModal] = useRecoilState(modalState)
   const [, setCurrentMovie] = useRecoilState(movieState)
 
-  const handleOpenModal = () => {
+  const handleOpenModal = (movie: Movie | DocumentData) => {
     setCurrentMovie(movie)
     setShowModal(true)
   }
@@ -64,6 +65,12 @@ function CategoryPage({
 
   return (
     <div className='mt-28'>
+      <Head>
+        <title>
+          {name === 'tv-show' ? 'TV Shows' : name === 'movies' ? 'movies' : 'My List'} - SunTV
+        </title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <Header />
       <h2 className='w-56 cursor-pointer text-sm font-semibold text-[#e5e5e5] transition 
       duration-200 hover:text-white
@@ -91,7 +98,7 @@ function CategoryPage({
             {list.map((movie) => {
               return <div className='relative h-28  cursor-pointer transition duration-200
               ease-out md:h-36 md:hover:scale-105'
-                onClick={handleOpenModal}>
+                onClick={() => handleOpenModal(movie)}>
                 <Image src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path || movie.poster_path
                   }`}
                   className="rounded-sm object-cover md-rounded"
